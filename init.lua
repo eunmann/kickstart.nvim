@@ -838,10 +838,14 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
 <<<<<<< HEAD
+<<<<<<< HEAD
           { name = 'copilot.vim' },
 =======
 		  { name = 'copilot.vim' },
 >>>>>>> c222a00 (Adding copilot and diffview)
+=======
+          { name = 'copilot.vim' },
+>>>>>>> ab983ee (Disabling Copilot tab)
         },
       }
     end,
