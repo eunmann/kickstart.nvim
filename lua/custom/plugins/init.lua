@@ -3,41 +3,11 @@
 --
 -- See the kickstart.nvim README for more information
 
-return {
-  {
-    'github/copilot.vim',
-    lazy = false,
-    config = function()
-      vim.g.copilot_no_tab_map = true
-
-      vim.keymap.set('i', '<C-I>', 'copilot#Accept("\\<CR>")', {
-        expr = true,
-        replace_keycodes = false,
-        silent = true,
-      })
-    end,
-  },
-  {
-    'sindrets/diffview.nvim',
-    lazy = false,
-  },
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-  },
-  {
-    'nvim-pack/nvim-spectre',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    keys = {
-      {
-        '<leader>S',
-        function()
-          require('spectre').toggle()
-        end,
-        desc = 'Toggle Spectre',
-      },
-    },
-    config = function()
-      require('spectre').setup()
-    end,
-  },
-}
+-- Iterate over all Lua files in the plugins directory and load them
+local plugins_dir = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'custom', 'plugins')
+for file_name, type in vim.fs.dir(plugins_dir) do
+  if type == 'file' and file_name:match '%.lua$' and file_name ~= 'init.lua' then
+    local module = file_name:gsub('%.lua$', '')
+    require('custom.plugins.' .. module)
+  end
+end
