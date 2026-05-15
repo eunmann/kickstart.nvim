@@ -1,7 +1,4 @@
-vim.pack.add {
-  'https://github.com/nvim-pack/nvim-spectre',
-  'https://github.com/nvim-lua/plenary.nvim',
-}
+vim.pack.add { 'https://github.com/nvim-pack/nvim-spectre' }
 
 vim.keymap.set('n', '<leader>S', function()
   require('spectre').toggle()
