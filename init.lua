@@ -108,9 +108,9 @@ do
 
   -- Make line numbers default
   vim.o.number = true
-  -- You can also add relative line numbers, to help with jumping.
-  --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  -- Hybrid line numbers: the current line shows its absolute number,
+  -- all other lines show their relative distance for easy jumps like 5j / d3k.
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -360,6 +360,7 @@ do
     spec = {
       { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
       { '<leader>t', group = '[T]oggle' },
+      { '<leader>g', group = '[G]it' }, -- diffview + octo keymaps (custom/plugins)
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
     },
@@ -754,7 +755,13 @@ do
     'tree-sitter-cli',
   }
 
-  require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+  require('mason-tool-installer').setup {
+    ensure_installed = ensure_installed,
+    -- Also update installed tools on startup, not just install missing ones.
+    -- Without this, Go tools go stale after a toolchain upgrade until manually
+    -- reinstalled from :Mason.
+    auto_update = true,
+  }
 
   for name, server in pairs(servers) do
     vim.lsp.config(name, server)
